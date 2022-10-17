@@ -1,23 +1,19 @@
 import { createStore } from "redux";
 
-export const SET_TOKEN = "set_token";
-export const REMOVE_TOKEN = "remove_token";
+export const SET_CATEGORIES = "set_categories";
 
 const initialState = {
-   token: null,
+   categories: null,
+   initialized: false,
 };
 
 const reducer = (state = initialState, action) => {
    switch (action.type) {
-      case SET_TOKEN:
+      case SET_CATEGORIES:
          return {
             ...state,
-            token: action.payload.token,
-         };
-      case REMOVE_TOKEN:
-         return {
-            ...state,
-            token: null,
+            categories: action.payload.categories,
+            initialized: true,
          };
       default:
          return state;

@@ -1,24 +1,25 @@
 import { createStore } from "redux";
 
-export const SET_TOKEN = "set_token";
-export const REMOVE_TOKEN = "remove_token";
+export const SET_APP_DATA = "set_app_data";
+export const REMOVE_APP_DATA = "set_app_data";
 
 const initialState = {
-   token: null,
+   appData: null,
 };
 
 const reducer = (state = initialState, action) => {
    switch (action.type) {
-      case SET_TOKEN:
+      case SET_APP_DATA:
          return {
             ...state,
-            token: action.payload.token,
+            appData: action.payload.appData,
          };
-      case REMOVE_TOKEN:
+      case REMOVE_APP_DATA:
          return {
             ...state,
-            token: null,
+            appData: null,
          };
+
       default:
          return state;
    }
