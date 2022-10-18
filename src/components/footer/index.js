@@ -1,6 +1,56 @@
 import BootsrapFooter from "../../svg/bootsrap_footer_ımg.svg";
 import FooterMenu from "./components/footer_menu";
-function Footer() {
+import { connect, Connect } from "react-redux";
+
+function Footer(props) {
+   console.log(">>FOOTER PROPS", props);
+
+   const aboutUsMenuContent = [
+      {
+         title: "Biz Kimiz",
+         link: "#/about/who-we-are",
+      },
+      {
+         title: "Vizyon",
+         link: "#/about/vision",
+      },
+      {
+         title: "Misyon",
+         link: "#/about/mission",
+      },
+      {
+         title: "İletişim",
+         link: "#/about/contact",
+      },
+   ];
+   const blogUsMenuContent = [
+      {
+         title: "Badana",
+         link: "#/blogs/badana",
+      },
+      {
+         title: "Dış Cephe Sıva",
+         link: "#/blogs/Dış cephe sıva",
+      },
+      {
+         title: "Elektrik Tesisatı",
+         link: "#/blogs/Elektrik tesisatı",
+      },
+   ];
+
+   const categoryMenu = [];
+   if (props.categoriesState.initialized === true) {
+      props.categoriesState.categories.map((item, index) => {
+         if (index > 4) {
+            return;
+         }
+         categoryMenu.push({
+            title: item.name,
+            link: "#/category/" + item.slug,
+         });
+      });
+   }
+   console.log(">>CATEGORİ MENUUU", categoryMenu);
    return (
       <footer class="pt-4 my-md-5 pt-md-5 border-top">
          <div class="row">
@@ -14,21 +64,23 @@ function Footer() {
                />
                <small class="d-block mb-3 text-muted">© 2017–2021</small>
             </div>
-            <FooterMenu
-               title="Hakkımızda"
-               menu={["Biz Kimiz", "Vizyon", "Misyon", "İletişim"]}
-            />
+            <FooterMenu title="Hakkımızda" menu={aboutUsMenuContent} />
+
             <FooterMenu
                title="Kategoriler"
-               menu={["Boyama", "Tadilat", "Elektrik/Elektronik"]}
+               menu={categoryMenu}
+               loading={!props.categoriesState.initialized}
             />
-            <FooterMenu
-               title="Servisler"
-               menu={["Badana", "Dış çephe", "Elektrik Tesisatı"]}
-            />
+
+            <FooterMenu title="Bloglar" menu={blogUsMenuContent} />
          </div>
       </footer>
    );
 }
 
-export default Footer;
+const mapStateToProps = (state) => {
+   return {
+      categoriesState: state.categoriesState,
+   };
+};
+export default connect(mapStateToProps)(Footer);

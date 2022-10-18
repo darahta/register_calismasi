@@ -1,5 +1,3 @@
-import { createStore } from "redux";
-
 export const SET_TOKEN = "set_token";
 export const REMOVE_TOKEN = "remove_token";
 
@@ -24,4 +22,4 @@ const reducer = (state = initialState, action) => {
    }
 };
 
-export default createStore(reducer);
+export default reducer;

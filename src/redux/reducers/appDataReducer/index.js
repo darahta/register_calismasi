@@ -1,5 +1,3 @@
-import { createStore } from "redux";
-
 export const SET_APP_DATA = "set_app_data";
 export const REMOVE_APP_DATA = "set_app_data";
 
@@ -25,4 +23,4 @@ const reducer = (state = initialState, action) => {
    }
 };
 
-export default createStore(reducer);
+export default reducer;

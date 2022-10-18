@@ -1,5 +1,3 @@
-import { createStore } from "redux";
-
 export const SET_CATEGORIES = "set_categories";
 
 const initialState = {
@@ -20,4 +18,4 @@ const reducer = (state = initialState, action) => {
    }
 };
 
-export default createStore(reducer);
+export default reducer;

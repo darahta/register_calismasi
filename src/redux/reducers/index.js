@@ -10,8 +10,6 @@ const reducersContainer = {
    categoriesState: categoriesReducer,
 };
 
-console.log("reducers container", reducersContainer);
-
 const reducers = combineReducers(reducersContainer);
 
 export default reducers;
