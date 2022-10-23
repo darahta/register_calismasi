@@ -3,7 +3,7 @@ import FooterMenu from "./components/footer_menu";
 import { connect, Connect } from "react-redux";
 
 function Footer(props) {
-   console.log(">>FOOTER PROPS", props);
+   //  console.log(">>FOOTER PROPS", props);
 
    const aboutUsMenuContent = [
       {
