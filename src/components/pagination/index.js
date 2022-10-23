@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
-import Loading from "../../components/loading";
 import useApi from "../../hooks/useApi";
-import CategoryBox from "./components/category_box";
-import Pagination from "../../components/pagination";
+import { Fragment, useEffect, useState } from "react";
+import Loading from "../loading";
+import Box from "./box";
 
-function Home() {
+function Pagination(props) {
+   console.log("Pakination props", props);
    const api = useApi();
-
-   const [categories, setCategoires] = useState(null);
+   const [rows, setRows] = useState(null);
 
    //pagination states
    const [pageLength, setPageLength] = useState(6);
@@ -15,19 +14,19 @@ function Home() {
    const [totalPageCount, setTotalPageCount] = useState(0);
 
    useEffect(() => {
-      getCategoryPage(pageLength, pageStart);
+      getRowsFromApi(pageLength, pageStart);
    }, []);
    useEffect(() => {
-      getCategoryPage(pageLength, pageStart);
+      getRowsFromApi(pageLength, pageStart);
    }, [pageLength, pageStart]);
 
-   const getCategoryPage = (length, start) => {
-      api.get("/public/categories/listMainCategories", {
+   const getRowsFromApi = (length, start) => {
+      api.get(props.remoteUrl, {
          params: { length, start },
       })
          .then((result) => {
             console.log(">>API RESULT", result);
-            setCategoires(result.data.data);
+            setRows(result.data.data);
             setTotalPageCount(
                Math.ceil(parseInt(result.data.recordsTotal) / pageLength)
             );
@@ -41,12 +40,12 @@ function Home() {
          });
    };
 
-   let categoryArray = [];
-   if (categories) {
+   let rowArray = [];
+   if (rows) {
       //kategori listesini componentlere ekle
-      categories.map((item, index) => {
-         categoryArray.push(
-            <CategoryBox
+      rows.map((item, index) => {
+         rowArray.push(
+            <Box
                key={index}
                id={item.id}
                name={item.name}
@@ -57,7 +56,7 @@ function Home() {
       });
    } else {
       // loading ekleme göster
-      categoryArray.push(<Loading key="0" />);
+      rowArray.push(<Loading key="0" />);
    }
 
    const pageComponts = [];
@@ -73,7 +72,6 @@ function Home() {
          </button>
       );
    }
-
    const lengthSelectComponents = [];
    for (let i = 0; i < 3; i++) {
       lengthSelectComponents.push(
@@ -88,12 +86,8 @@ function Home() {
    }
 
    return (
-      <main>
-         <Pagination
-            remoteUrl="/public/categories/listMainCategories"
-            title="Categories"
-         />
-
+      <Fragment>
+         <h2 className="display-6 text-center mb-4">{props.title}</h2>
          <div className="row mb-3 text-center">
             <div>
                Page Count: {totalPageCount}
@@ -106,14 +100,9 @@ function Home() {
          </div>
          <br />
          <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
-            {categoryArray}
+            {rowArray}
          </div>
-
-         <h2 className="display-6 text-center mb-4">Blogs</h2>
-
-         <div className="table-responsive">Buraya Bloglar Gelsin</div>
-      </main>
+      </Fragment>
    );
 }
-
-export default Home;
+export default Pagination;
